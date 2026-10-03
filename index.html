@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>WARDROBE</title>
+<meta name="theme-color" content="#0d0e10" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="WARDROBE" />
+<link rel="manifest" href="manifest.webmanifest" />
+<style>
+  :root{
+    --bg:#0d0e10; --panel:#14161a; --panel2:#1a1d22; --text:#f2f3f5; --muted:#9097a1;
+    --line:#272b31; --accent:#dfe7ef; --good:#b6f2c5; --need:#ffd8a8; --replace:#ffb0b0;
+    --radius:22px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#0a0b0d,#111318 55%,#0b0c0f);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh;-webkit-tap-highlight-color:transparent;overscroll-behavior-y:none}
+  button,input,select,textarea{touch-action:manipulation}
+  button,input,select,textarea{font:inherit}
+  button{cursor:pointer}
+  .wrap{max-width:1220px;margin:0 auto;padding:calc(28px + env(safe-area-inset-top)) max(22px,env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(22px,env(safe-area-inset-left))}
+  .topbar{display:flex;align-items:center;justify-content:flex-start;margin-bottom:26px;padding:2px 0 4px}
+  .brand h1{margin:0;font-size:clamp(34px,5vw,58px);line-height:.95;letter-spacing:-.055em;font-weight:800}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+  .btn{border:1px solid var(--line);background:#17191e;color:var(--text);padding:11px 14px;border-radius:14px;transition:.18s ease}
+  .btn:hover{transform:translateY(-1px);background:#1f2228}
+  .btn.primary{background:#f4f5f7;color:#111;border-color:#f4f5f7;font-weight:700}
+  .hero{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;margin-bottom:18px}
+  .progress-card,.stat{background:rgba(21,23,28,.9);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:0 16px 60px rgba(0,0,0,.2)}
+  .progress-card{min-height:170px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+  .progress-card:after{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.12),transparent 65%)}
+  .kicker{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted)}
+  .progress-main{display:flex;align-items:flex-end;gap:14px;margin-top:18px}
+  .big{font-size:64px;font-weight:800;letter-spacing:-.06em;line-height:.9}
+  .fraction{color:var(--muted);padding-bottom:7px}
+  .bar{height:10px;border-radius:999px;background:#23262c;overflow:hidden;margin-top:18px}
+  .bar > span{display:block;height:100%;width:0;background:linear-gradient(90deg,#f4f5f7,#9da7b4);border-radius:inherit;transition:.35s ease}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .stat{min-height:80px;padding:16px;border:1px solid var(--line);color:var(--text);text-align:left;cursor:pointer;transition:.18s ease;width:100%}
+  .stat:hover{transform:translateY(-2px);background:#1a1d22;border-color:#3a4049}
+  .stat.active{border-color:#747d89;background:#20242a;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+  .stat b{font-size:28px;display:block;letter-spacing:-.03em}.stat span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0 20px}
+  .search{flex:1;min-width:220px;background:#14161a;border:1px solid var(--line);color:var(--text);padding:12px 14px;border-radius:14px;outline:none}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:#14161a;color:var(--muted);border-radius:999px;padding:9px 12px}
+  .chip.active{background:#f2f3f5;color:#111;border-color:#f2f3f5;font-weight:700}
+  .section-head{display:flex;align-items:end;justify-content:space-between;margin:18px 0 12px;gap:10px}
+  .section-head-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .section-head h2{margin:0;font-size:24px;letter-spacing:-.03em}.section-head small{color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+  .category-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:4px 0 24px}
+  .category-summary{border:1px solid var(--line);background:#121419;border-radius:17px;padding:14px 15px;text-align:left;color:var(--text);transition:.18s ease;cursor:pointer;min-height:72px}
+  .category-summary:hover{transform:translateY(-2px);background:#181b20;border-color:#373c45}
+  .category-summary-top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}
+  .category-summary-name{font-size:13px;font-weight:800;letter-spacing:.06em}
+  .category-summary-count{font-size:12px;color:var(--muted)}
+  .mini-bar{height:5px;border-radius:999px;background:#24272d;overflow:hidden}
+  .mini-bar span{display:block;height:100%;background:#dfe4ea;border-radius:inherit}
+  .category-block{margin:0 0 10px;border:1px solid var(--line);background:#111318;border-radius:20px;overflow:hidden;transition:.18s ease}
+  .category-block.open{background:#121419;border-color:#353a43;box-shadow:0 14px 44px rgba(0,0,0,.16)}
+  .category-block-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;border:0;margin:0;min-height:68px;cursor:pointer;user-select:none;transition:.18s ease}
+  .category-block-head:hover{background:#17191e}
+  .category-block-head:focus-visible{outline:2px solid #8c95a1;outline-offset:-3px}
+  .category-block.open .category-block-head{border-bottom:1px solid var(--line)}
+  .category-chevron{width:34px;height:34px;border:1px solid var(--line);border-radius:999px;display:grid;place-items:center;color:#a7adb6;font-size:18px;line-height:1;flex:0 0 auto;transition:.2s ease;background:#17191e}
+  .category-block.open .category-chevron{transform:rotate(180deg);background:#202329;color:#f2f3f5}
+  .category-content{display:none;padding:14px}
+  .category-block.open .category-content{display:block}
+  .category-block-title{display:flex;align-items:baseline;gap:12px;min-width:0}
+  .category-block-title h3{margin:0;font-size:26px;letter-spacing:-.035em}
+  .category-block-title span{font-size:12px;color:var(--muted);white-space:nowrap}
+  .category-block-actions{display:flex;gap:8px;align-items:center}
+  .small-btn{border:1px solid var(--line);background:#15171b;color:#c7ccd3;padding:8px 10px;border-radius:11px;font-size:12px}
+  .all-intro{margin:2px 0 10px;color:var(--muted);font-size:13px}
+  .card{border:1px solid var(--line);background:#14161a;border-radius:20px;overflow:hidden;min-height:330px;display:flex;flex-direction:column;transition:.2s ease;position:relative}
+  .card:hover{transform:translateY(-3px);border-color:#3a4049;box-shadow:0 14px 40px rgba(0,0,0,.24)}
+  .photo{aspect-ratio:4/3;background:linear-gradient(135deg,#20242b,#111318);position:relative;overflow:hidden}
+  .photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;color:#626975;font-weight:700;letter-spacing:.08em;font-size:13px;padding:18px}
+  .badge{position:absolute;top:12px;left:12px;padding:7px 9px;border-radius:999px;font-size:11px;font-weight:800;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12)}
+  .badge.owned{background:rgba(182,242,197,.88);color:#102115}.badge.need{background:rgba(255,216,168,.9);color:#2a1b09}.badge.replace{background:rgba(255,176,176,.9);color:#2a1010}
+  .card-body{padding:15px;display:flex;flex-direction:column;gap:9px;flex:1}
+  .card h3{margin:0;font-size:18px;letter-spacing:-.02em}.meta{color:var(--muted);font-size:13px;min-height:18px}.note{font-size:13px;color:#c7cbd1;line-height:1.45}
+  .card-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--muted);font-size:12px}.edit-link{border:none;background:none;color:#dfe3e8;padding:6px 0}
+  .empty{padding:46px;border:1px dashed #30343b;border-radius:18px;text-align:center;color:var(--muted)}
+
+  /* v3: type-first wardrobe rows */
+  .type-list{display:flex;flex-direction:column;gap:12px}
+  .type-row{display:grid;grid-template-columns:220px minmax(0,1fr);gap:14px;padding:14px;border:1px solid var(--line);background:#121419;border-radius:20px}
+  .type-info{padding:4px 6px;display:flex;flex-direction:column;min-width:0}
+  .type-info .type-kicker{font-size:10px;letter-spacing:.14em;color:#707782;text-transform:uppercase;margin-bottom:8px}
+  .type-info h3{margin:0;font-size:20px;letter-spacing:-.03em;line-height:1.08}
+  .type-count{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.45}
+  .type-add{margin-top:auto;padding-top:16px}
+  .type-add button{border:1px solid var(--line);background:#17191e;color:#d5d9df;border-radius:11px;padding:8px 10px;font-size:12px}
+  .variant-lane{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;padding:1px 2px 9px;align-items:stretch;min-width:0;overscroll-behavior-x:contain;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+  .variant-lane::-webkit-scrollbar{height:8px}
+  .variant-lane::-webkit-scrollbar-track{background:#111318;border-radius:999px}
+  .variant-lane::-webkit-scrollbar-thumb{background:#343941;border-radius:999px}
+  .variant-lane::-webkit-scrollbar-thumb:hover{background:#4a515c}
+  .variant-card{flex:0 0 174px;scroll-snap-align:start;border:1px solid #2b2f36;background:#181b20;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-height:246px;transition:.18s ease}
+  .variant-card:hover{transform:translateY(-2px);border-color:#414751;background:#1c2026}
+  .variant-photo{height:138px;background:linear-gradient(135deg,#22262d,#101216);position:relative;overflow:hidden}
+  .variant-photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .variant-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;color:#606772;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .variant-card .badge{top:9px;left:9px;padding:6px 8px;font-size:10px}
+  .variant-body{padding:11px;display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
+  .variant-title{font-size:14px;font-weight:800;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .variant-note{font-size:11px;color:var(--muted);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:30px}
+  .variant-edit{margin-top:auto;border:0;background:none;color:#dfe3e8;padding:5px 0 0;text-align:left;font-size:11px}
+  .add-variant-card{flex:0 0 132px;scroll-snap-align:start;min-height:246px;border:1px dashed #333840;background:transparent;border-radius:16px;color:#7f8792;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font-size:12px;line-height:1.35}
+  .add-variant-card:hover{background:#17191e;color:#d7dbe1;border-color:#4a505a}
+  .category-block .type-list{margin-top:4px}
+  dialog{width:min(660px,calc(100vw - 28px));border:1px solid var(--line);background:#121419;color:var(--text);border-radius:24px;padding:0;box-shadow:0 30px 100px rgba(0,0,0,.6)}
+  dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
+  .modal{padding:22px}.modal h3{margin:0 0 18px;font-size:24px}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#191c21;color:white;border-radius:12px;padding:11px 12px;outline:none}.field textarea{min-height:88px;resize:vertical}
+  .preview{height:180px;border-radius:16px;overflow:hidden;border:1px dashed #343942;background:#17191e;display:flex;align-items:center;justify-content:center;color:var(--muted)}.preview img{width:100%;height:100%;object-fit:cover}
+  .modal-actions{display:flex;justify-content:space-between;gap:10px;margin-top:18px}.right{display:flex;gap:10px}.danger{background:#2a1719;border-color:#4a262a;color:#ffb6bd}.hidden{display:none!important}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:#f3f4f6;color:#111;padding:11px 14px;border-radius:999px;font-weight:700;font-size:13px;opacity:0;pointer-events:none;transition:.25s ease;z-index:99}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  @media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.category-summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  @media(max-width:560px){.wrap{padding:20px 14px 70px}.topbar{align-items:flex-start;flex-direction:column}.actions{justify-content:flex-start}.grid{grid-template-columns:1fr 1fr;gap:10px}.category-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.category-block-title h3{font-size:22px}.category-block-head{align-items:center}.card{min-height:290px}.card-body{padding:12px}.card h3{font-size:16px}.form{grid-template-columns:1fr}.field.full{grid-column:auto}.big{font-size:52px}.stats{grid-template-columns:repeat(3,1fr)}.stat b{font-size:23px}}
+  @media(max-width:760px){
+    .type-row{grid-template-columns:1fr;gap:10px}
+    .type-info{display:grid;grid-template-columns:1fr auto;align-items:end;gap:6px 12px;padding:2px}
+    .type-info .type-kicker{grid-column:1/-1;margin-bottom:0}
+    .type-info h3{font-size:19px}
+    .type-count{text-align:right;margin:0}
+    .type-add{display:none}
+    .variant-card{flex-basis:158px}
+    .add-variant-card{flex-basis:118px}
+  }
+  @media(max-width:700px){
+    .section-head{align-items:flex-start;flex-direction:column}
+    .section-head-right{width:100%;justify-content:flex-start}
+    .section-head-right .btn.primary{margin-left:auto}
+  }
+  @media(max-width:560px){
+    .type-row{padding:10px;border-radius:17px}
+    .variant-card{flex-basis:145px;min-height:228px}
+    .variant-photo{height:122px}
+    .add-variant-card{flex-basis:105px;min-height:228px}
+  }
+
+  /* iPhone-first polish */
+  @media(max-width:700px){
+    .wrap{padding:calc(16px + env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) calc(54px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}
+    .topbar{margin-bottom:18px}
+    .brand h1{font-size:42px;letter-spacing:-.06em}
+    .hero{gap:10px;margin-bottom:14px}
+    .progress-card{min-height:132px;padding:17px;border-radius:20px}
+    .progress-main{margin-top:12px}
+    .big{font-size:50px}
+    .stats{gap:7px}
+    .stat{min-height:74px;padding:12px 10px;border-radius:16px}
+    .stat b{font-size:24px}
+    .stat span{font-size:10px;letter-spacing:.08em}
+    .section-head{margin:18px 0 10px;gap:12px}
+    .section-head h2{font-size:22px}
+    .section-head-right{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+    .section-head-right small{grid-column:1/-1}
+    .section-head-right .small-btn,.section-head-right .btn{min-height:44px;width:100%;margin:0!important}
+    .toolbar{margin:10px 0 14px}
+    .search{min-width:0;width:100%;min-height:46px;font-size:16px}
+    .category-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:16px}
+    .category-summary{padding:12px;min-height:68px;border-radius:15px}
+    .category-block{border-radius:18px;margin-bottom:8px}
+    .category-block-head{min-height:64px;padding:14px 14px}
+    .category-block-title{display:block}
+    .category-block-title h3{font-size:20px}
+    .category-block-title span{display:block;margin-top:5px;font-size:11px}
+    .category-chevron{width:38px;height:38px;font-size:19px}
+    .category-content{padding:10px}
+    .type-list{gap:9px}
+    .type-row{padding:10px;border-radius:16px}
+    .type-info{display:grid;grid-template-columns:1fr auto;align-items:end;gap:5px 10px;padding:2px}
+    .type-info h3{font-size:18px}
+    .type-count{font-size:11px}
+    .variant-lane{margin-right:-10px;padding-right:10px;scroll-padding-left:2px}
+    .variant-card{flex-basis:148px;min-height:226px;border-radius:15px}
+    .variant-photo{height:122px}
+    .variant-body{padding:10px}
+    .variant-edit{min-height:36px;display:flex;align-items:center}
+    .add-variant-card{flex-basis:110px;min-height:226px}
+    dialog{width:100vw;max-width:none;margin:auto 0 0;border-radius:24px 24px 0 0;border-left:0;border-right:0;border-bottom:0;max-height:92dvh;padding-bottom:env(safe-area-inset-bottom)}
+    .modal{padding:20px 16px calc(18px + env(safe-area-inset-bottom))}
+    .modal-actions .btn{min-height:44px}
+    .toast{bottom:calc(16px + env(safe-area-inset-bottom));max-width:calc(100vw - 24px);text-align:center}
+  }
+  @media(max-width:390px){
+    .brand h1{font-size:38px}
+    .category-summary-grid{grid-template-columns:1fr 1fr}
+    .variant-card{flex-basis:142px}
+  }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand"><h1>WARDROBE</h1></div>
+  </div>
+
+  <section class="hero">
+    <div class="progress-card">
+      <div>
+        <div class="kicker">BASIC COMPLETION</div>
+        <div class="progress-main"><div class="big" id="percent">0%</div><div class="fraction" id="fraction">0 / 0</div></div>
+      </div>
+      <div class="bar"><span id="progressBar"></span></div>
+    </div>
+    <div class="stats">
+      <button class="stat" data-status-filter="owned" type="button"><b id="ownedCount">0</b><span>Є</span></button>
+      <button class="stat" data-status-filter="need" type="button"><b id="needCount">0</b><span>Треба</span></button>
+      <button class="stat" data-status-filter="replace" type="button"><b id="replaceCount">0</b><span>Замінити</span></button>
+    </div>
+  </section>
+
+  <div class="section-head">
+    <div><div class="kicker">OVERVIEW</div><h2 id="viewTitle">Огляд гардероба</h2></div>
+    <div class="section-head-right">
+      <small id="viewCount"></small>
+      <button class="small-btn" id="showAllBtn" type="button" style="display:none">Показати все</button>
+      <button class="small-btn" id="addCategoryBtn" type="button">+ Категорія</button>
+      <button class="btn primary" id="addItemBtn" type="button">+ Додати річ</button>
+    </div>
+  </div>
+  <div class="toolbar"><input id="search" class="search" placeholder="Пошук: bomber, jeans, oakley..." /></div>
+  <main id="content"></main>
+</div>
+
+<dialog id="itemDialog">
+  <form method="dialog" class="modal" id="itemForm">
+    <h3 id="modalTitle">Додати річ</h3>
+    <div class="form">
+      <div class="field"><label>Тип речі</label><input id="fName" required placeholder="Пуховик / Джинси / Бомбер..." /></div>
+      <div class="field"><label>Категорія</label><select id="fCategory"></select></div>
+      <div class="field"><label>Варіант / колір</label><input id="fVariant" placeholder="чорний / коричневий / light blue..." /></div>
+      <div class="field"><label>Статус</label><select id="fStatus"><option value="owned">Є</option><option value="need">Треба</option><option value="replace">Замінити</option></select></div>
+      <div class="field full"><label>Примітка</label><textarea id="fNote" placeholder="Fit A, cropped, cotton... "></textarea></div>
+      <div class="field full"><label>Фото — URL</label><input id="fImageUrl" placeholder="https://..." /></div>
+      <div class="field full"><label>Або завантажити фото</label><input id="fImageFile" type="file" accept="image/*" /></div>
+      <div class="field full"><div class="preview" id="preview">Без фото</div></div>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn danger hidden" id="deleteBtn">Видалити</button>
+      <div class="right">
+        <button type="button" class="btn" id="cancelBtn">Скасувати</button>
+        <button type="submit" class="btn primary">Зберегти</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY='baseWardrobe_v1';
+const initialCategories=['JACKETS','PANTS','SHOES','BAGS','HATS','SLIPPERS','BELTS','SHORTS','UNDERWEAR','SOCKS','HOODIES','TEES','TANKS','SHIRTS','JUST WANT'];
+const seed=[
+['JACKETS','Пуховик','чорний','owned',''],['JACKETS','Бомбер','чорний','need','зима / весна'],['JACKETS','Мембранна вітровка','чорний','need',''],['JACKETS','Легка вітровка','','need','не мембрана / для бігу'],['JACKETS','Мікропух','','need',''],['JACKETS','Кожанка','','need',''],
+['PANTS','Джинси','сині','owned','світліші / темніші / cotton · широкий пропорційний fit A'],['PANTS','Джинси','чорні','owned','широкий пропорційний fit A'],['PANTS','Джинси','білі','need','широкий пропорційний fit A'],['PANTS','Хлопкові штани','чорні','owned','прямі · без принтів · без завуження · fit A'],['PANTS','Хлопкові штани','сірі','owned','прямі · без принтів · без завуження · fit A'],['PANTS','Карго','чорні','need','fit A · якісний матеріал'],['PANTS','Карго','зелені','need','fit A · якісний матеріал'],['PANTS','Вельветові штани','будь-який','need','fit A'],
+['SHOES','Adidas Spezial','','owned','casual'],['SHOES','ASICS','','need','casual'],['SHOES','New Balance','','need','casual'],['SHOES','Winter boots','','need','зимові'],['SHOES','Adidas running','','need','біг'],['SHOES','Nike running','','need','біг'],['SHOES','Saucony','','need','біг'],['SHOES','Hoka','','need','біг'],['SHOES','Туфлі','чорні','owned',''],['SHOES','Туфлі','коричневі','need',''],
+['BAGS','Портфель','','owned',''],['BAGS','Sling bag','','need',''],['BAGS','Сумка через плече','','need',''],['BAGS','Шопер','','need',''],['BAGS','Mini pack','','need',''],
+['HATS','Кепка','DEF','owned',''],['HATS','Кепка','RUN','owned',''],['HATS','Gorpcore cap','','need',''],['HATS','Панама','','need',''],['HATS','Шапка','','need',''],['HATS','Балаклава','','need',''],['HATS','Баф','','need',''],['HATS','Шарф','','need',''],
+['SLIPPERS','Crocs','','owned',''],['SLIPPERS','Hoka-like slippers','','need',''],['SLIPPERS','Birkenstock','','need',''],['BELTS','Ремінь','','need','можна з якимось лого'],
+['SHORTS','Джинсові шорти','сині','owned',''],['SHORTS','Джинсові шорти','чорні','need',''],['SHORTS','Спортивні шорти','чорні','owned',''],['SHORTS','Карго шорти','','need','ще не визначився'],
+['UNDERWEAR','Труси','','owned','6 чорних Puma · 2 Dickies'],['UNDERWEAR','Термо','літо','owned',''],['UNDERWEAR','Термо','зима','owned',''],
+['SOCKS','Шкарпетки','білі','owned',''],['SOCKS','Зимові шкарпетки','','owned',''],['SOCKS','Технологічні шкарпетки','','need',''],
+['HOODIES','Zip hoodie','чорна','need',''],['HOODIES','Zip hoodie','сіра','owned',''],['HOODIES','Hoodie','чорна','need','без zip'],['HOODIES','Hoodie','сіра','need','без zip'],['HOODIES','Светр / лонгслів','','need',''],
+['TEES','Футболка','біла','owned','casual · 2 шт'],['TEES','Футболка','чорна','owned','casual · 2 шт'],['TEES','Футболка','червона','owned','casual'],['TEES','Футболка','синя','owned','casual'],['TEES','Футболка','зелена','owned','casual'],['TEES','Compression tee','чорна','owned','sport'],['TEES','Compression tee','біла','owned','sport'],['TEES','Compression tee','червона','owned','sport'],['TEES','Compression tee','синя','owned','sport'],
+['TANKS','Майка','чорна','need','casual · хлопок / синтетика'],['TANKS','Майка','біла','need','casual · хлопок / синтетика'],['TANKS','Майка sport','чорна','need','синтетика'],['TANKS','Майка sport','біла','need','синтетика'],
+['SHIRTS','Рубашка','біла','owned','cropped'],['SHIRTS','Рубашка','чорна','owned','cropped'],
+['JUST WANT','Карабін','','need',''],['JUST WANT','Біжутерія','','need',''],['JUST WANT','Salomon','','need',''],['JUST WANT','Oakley','','need',''],['JUST WANT','Saucony','','need',''],['JUST WANT','Nike watch','','need','']
+].map((x,i)=>({id:'seed-'+i,category:x[0],name:x[1],variant:x[2],status:x[3],note:x[4],image:''}));
+
+let state=load();
+let activeCategory='ALL'; // kept for data compatibility; overview is the only view in v4
+let activeFilter='all';
+let openCategories=new Set();
+let editingId=null;
+let uploadedImage='';
+
+function load(){
+  try{const raw=localStorage.getItem(STORAGE_KEY); if(raw) return JSON.parse(raw);}catch(e){}
+  return {categories:[...initialCategories],items:seed};
+}
+function save(){
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+  catch(e){toast('Не влізло в локальне сховище. Спробуй менше фото.');}
+}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800)}
+function statusText(s){return s==='owned'?'Є':s==='replace'?'Замінити':'Треба'}
+function makeId(){return 'i-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7)}
+
+function render(){
+  const baseItems=state.items.filter(i=>i.category!=='JUST WANT');
+  const owned=baseItems.filter(i=>i.status==='owned').length;
+  const need=baseItems.filter(i=>i.status==='need').length;
+  const replace=baseItems.filter(i=>i.status==='replace').length;
+  const pct=baseItems.length?Math.round((owned/baseItems.length)*100):0;
+  document.getElementById('percent').textContent=pct+'%';
+  document.getElementById('fraction').textContent=`${owned} / ${baseItems.length}`;
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('ownedCount').textContent=owned;
+  document.getElementById('needCount').textContent=need;
+  document.getElementById('replaceCount').textContent=replace;
+
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  let items=[...state.items];
+  if(activeFilter!=='all') items=items.filter(i=>i.status===activeFilter);
+  if(q) items=items.filter(i=>[i.name,i.variant,i.note,i.category].join(' ').toLowerCase().includes(q));
+
+  const filterLabel=activeFilter==='owned'?'Є':activeFilter==='need'?'Треба':activeFilter==='replace'?'Замінити':'Огляд гардероба';
+  document.getElementById('viewTitle').textContent=filterLabel;
+  document.getElementById('viewCount').textContent=`${items.length} позицій`;
+  document.getElementById('showAllBtn').style.display=activeFilter==='all'?'none':'inline-flex';
+  document.querySelectorAll('[data-status-filter]').forEach(b=>b.classList.toggle('active',b.dataset.statusFilter===activeFilter));
+
+  const content=document.getElementById('content');content.innerHTML='';
+  if(!items.length){content.innerHTML='<div class="empty">Нічого не знайдено.</div>';return}
+  renderAllView(content,items,q);
+}
+
+function renderAllView(content,visibleItems,q){
+  if(activeFilter==='all' && !q){
+    const intro=document.createElement('div');intro.className='all-intro';
+    intro.textContent='Натисни на категорію, щоб розгорнути її. Усередині довгі ряди варіантів скроляться вправо.';
+    content.appendChild(intro);
+
+    const summary=document.createElement('div');summary.className='category-summary-grid';
+    state.categories.forEach(category=>{
+      const all=state.items.filter(i=>i.category===category);
+      if(!all.length) return;
+      const owned=all.filter(i=>i.status==='owned').length;
+      const pct=all.length?Math.round(owned/all.length*100):0;
+      const b=document.createElement('button');b.type='button';b.className='category-summary';
+      b.innerHTML=`<div class="category-summary-top"><span class="category-summary-name">${esc(category)}</span><span class="category-summary-count">${owned}/${all.length}</span></div><div class="mini-bar"><span style="width:${pct}%"></span></div>`;
+      b.onclick=()=>toggleCategory(category,true);
+      summary.appendChild(b);
+    });
+    content.appendChild(summary);
+  }
+
+  state.categories.forEach(category=>{
+    const items=visibleItems.filter(i=>i.category===category);
+    if(!items.length) return;
+    const all=state.items.filter(i=>i.category===category);
+    const owned=all.filter(i=>i.status==='owned').length;
+    const need=all.filter(i=>i.status==='need').length;
+    const replace=all.filter(i=>i.status==='replace').length;
+
+    const section=document.createElement('section');
+    section.className='category-block'+(openCategories.has(category)?' open':'');
+    section.dataset.category=category;
+
+    const head=document.createElement('div');head.className='category-block-head';
+    head.tabIndex=0;head.setAttribute('role','button');head.setAttribute('aria-expanded',openCategories.has(category)?'true':'false');
+    const title=document.createElement('div');title.className='category-block-title';
+    title.innerHTML=`<h3>${esc(category)}</h3><span>${owned} є · ${need} треба${replace?` · ${replace} замінити`:''}</span>`;
+    const chevron=document.createElement('span');chevron.className='category-chevron';chevron.setAttribute('aria-hidden','true');chevron.textContent='⌄';
+    head.append(title,chevron);
+    head.onclick=()=>toggleCategory(category,false);
+    head.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleCategory(category,false)}};
+
+    const inner=document.createElement('div');inner.className='category-content';
+    renderTypeRows(inner,items,category);
+    section.append(head,inner);
+    content.appendChild(section);
+  });
+}
+
+function toggleCategory(category,scrollTo=false){
+  if(openCategories.has(category)) openCategories.delete(category); else openCategories.add(category);
+  render();
+  if(scrollTo && openCategories.has(category)){
+    requestAnimationFrame(()=>document.querySelector(`.category-block[data-category="${CSS.escape(category)}"]`)?.scrollIntoView({behavior:'smooth',block:'start'}));
+  }
+}
+
+function renderTypeRows(parent,items,category){
+  const list=document.createElement('div');list.className='type-list';
+  const groups=[];
+  const byName=new Map();
+  items.forEach(item=>{
+    const key=item.name.trim().toLowerCase();
+    if(!byName.has(key)){const group={name:item.name,items:[]};byName.set(key,group);groups.push(group)}
+    byName.get(key).items.push(item);
+  });
+
+  groups.forEach(group=>{
+    const row=document.createElement('article');row.className='type-row';
+    const info=document.createElement('div');info.className='type-info';
+    const owned=group.items.filter(i=>i.status==='owned').length;
+    const need=group.items.filter(i=>i.status==='need').length;
+    const replace=group.items.filter(i=>i.status==='replace').length;
+    info.innerHTML=`<div class="type-kicker">TYPE</div><h3>${esc(group.name)}</h3><div class="type-count">${owned} є${need?` · ${need} треба`:''}${replace?` · ${replace} замінити`:''}</div>`;
+    const addWrap=document.createElement('div');addWrap.className='type-add';
+    const addBtn=document.createElement('button');addBtn.textContent='+ Варіант';
+    addBtn.onclick=()=>openAdd({category,name:group.name});
+    addWrap.appendChild(addBtn);info.appendChild(addWrap);
+
+    const lane=document.createElement('div');lane.className='variant-lane';
+    group.items.forEach(item=>lane.appendChild(variantCard(item)));
+    const quickAdd=document.createElement('button');quickAdd.className='add-variant-card';quickAdd.innerHTML='+ Додати<br>варіант';
+    quickAdd.onclick=()=>openAdd({category,name:group.name});lane.appendChild(quickAdd);
+    row.append(info,lane);list.appendChild(row);
+  });
+  parent.appendChild(list);
+}
+
+function variantCard(item){
+  const card=document.createElement('article');card.className='variant-card';
+  const photo=document.createElement('div');photo.className='variant-photo';
+  if(item.image){const img=document.createElement('img');img.src=item.image;img.alt=`${item.name} ${item.variant||''}`;photo.appendChild(img)}
+  else{const ph=document.createElement('div');ph.className='variant-placeholder';ph.textContent=item.variant||item.name;photo.appendChild(ph)}
+  const badge=document.createElement('span');badge.className='badge '+item.status;badge.textContent=statusText(item.status);photo.appendChild(badge);
+  const body=document.createElement('div');body.className='variant-body';
+  const title=document.createElement('div');title.className='variant-title';title.textContent=item.variant||'Основний';
+  const note=document.createElement('div');note.className='variant-note';note.textContent=item.note||'Без примітки';
+  const edit=document.createElement('button');edit.className='variant-edit';edit.textContent='Редагувати';edit.onclick=()=>openEdit(item.id);
+  body.append(title,note,edit);card.append(photo,body);return card;
+}
+function itemCard(item){
+  const card=document.createElement('article');card.className='card';
+  const photo=document.createElement('div');photo.className='photo';
+  if(item.image){const img=document.createElement('img');img.src=item.image;img.alt=item.name;photo.appendChild(img)}
+  else{const ph=document.createElement('div');ph.className='placeholder';ph.textContent=item.category;photo.appendChild(ph)}
+  const badge=document.createElement('span');badge.className='badge '+item.status;badge.textContent=statusText(item.status);photo.appendChild(badge);
+  const body=document.createElement('div');body.className='card-body';
+  body.innerHTML=`<h3>${esc(item.name)}</h3><div class="meta">${esc(item.variant||'')}</div><div class="note">${esc(item.note||'')}</div>`;
+  const foot=document.createElement('div');foot.className='card-foot';foot.innerHTML=`<span>${esc(item.category)}</span>`;
+  const edit=document.createElement('button');edit.className='edit-link';edit.textContent='Редагувати';edit.onclick=()=>openEdit(item.id);foot.appendChild(edit);body.appendChild(foot);
+  card.append(photo,body);return card;
+}
+function esc(s=''){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+
+function syncCategoryOptions(){
+  const select=document.getElementById('fCategory');select.innerHTML='';state.categories.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;select.appendChild(o)});
+}
+function openAdd(prefill={}){
+  editingId=null;uploadedImage='';syncCategoryOptions();
+  document.getElementById('modalTitle').textContent='Додати річ';document.getElementById('deleteBtn').classList.add('hidden');
+  document.getElementById('fName').value=prefill.name||'';document.getElementById('fCategory').value=prefill.category||state.categories[0];
+  document.getElementById('fVariant').value=prefill.variant||'';document.getElementById('fStatus').value='need';document.getElementById('fNote').value='';document.getElementById('fImageUrl').value='';document.getElementById('fImageFile').value='';setPreview('');
+  document.getElementById('itemDialog').showModal();
+}
+function openEdit(id){
+  const item=state.items.find(i=>i.id===id);if(!item)return;editingId=id;uploadedImage=item.image||'';syncCategoryOptions();
+  document.getElementById('modalTitle').textContent='Редагувати річ';document.getElementById('deleteBtn').classList.remove('hidden');
+  document.getElementById('fName').value=item.name;document.getElementById('fCategory').value=item.category;document.getElementById('fVariant').value=item.variant||'';document.getElementById('fStatus').value=item.status;document.getElementById('fNote').value=item.note||'';document.getElementById('fImageUrl').value=item.image?.startsWith('http')?item.image:'';document.getElementById('fImageFile').value='';setPreview(item.image||'');
+  document.getElementById('itemDialog').showModal();
+}
+function setPreview(src){const p=document.getElementById('preview');p.innerHTML='';if(!src){p.textContent='Без фото';return}const img=document.createElement('img');img.src=src;p.appendChild(img)}
+
+async function compressImage(file){
+  const data=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)});
+  const img=await new Promise((res,rej)=>{const im=new Image();im.onload=()=>res(im);im.onerror=rej;im.src=data});
+  const max=1000;let w=img.width,h=img.height;const scale=Math.min(1,max/Math.max(w,h));w=Math.round(w*scale);h=Math.round(h*scale);
+  const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);return c.toDataURL('image/jpeg',.82);
+}
+
+document.getElementById('addItemBtn').onclick=()=>openAdd();
+document.getElementById('cancelBtn').onclick=()=>document.getElementById('itemDialog').close();
+document.getElementById('addCategoryBtn').onclick=()=>{const name=prompt('Назва нової категорії:');if(!name)return;const c=name.trim().toUpperCase();if(!c)return;if(!state.categories.includes(c)){state.categories.push(c);save();render();toast('Категорію додано')}};
+document.getElementById('deleteBtn').onclick=()=>{if(!editingId)return;if(confirm('Видалити цю картку?')){state.items=state.items.filter(i=>i.id!==editingId);save();document.getElementById('itemDialog').close();render();toast('Видалено')}};
+document.getElementById('search').addEventListener('input',render);
+document.querySelectorAll('[data-status-filter]').forEach(b=>b.onclick=()=>{
+  activeFilter=activeFilter===b.dataset.statusFilter?'all':b.dataset.statusFilter;
+  render();
+  document.getElementById('content').scrollIntoView({behavior:'smooth',block:'start'});
+});
+document.getElementById('showAllBtn').onclick=()=>{activeFilter='all';render()};
+document.getElementById('fImageUrl').addEventListener('input',e=>{if(e.target.value.trim()){uploadedImage=e.target.value.trim();setPreview(uploadedImage)}});
+document.getElementById('fImageFile').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;uploadedImage=await compressImage(file);document.getElementById('fImageUrl').value='';setPreview(uploadedImage)});
+document.getElementById('itemForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const item={id:editingId||makeId(),name:document.getElementById('fName').value.trim(),category:document.getElementById('fCategory').value,variant:document.getElementById('fVariant').value.trim(),status:document.getElementById('fStatus').value,note:document.getElementById('fNote').value.trim(),image:uploadedImage||document.getElementById('fImageUrl').value.trim()};
+  if(editingId){const idx=state.items.findIndex(i=>i.id===editingId);state.items[idx]=item}else state.items.unshift(item);
+  save();document.getElementById('itemDialog').close();render();toast('Збережено');
+});
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>
