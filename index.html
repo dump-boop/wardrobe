@@ -108,10 +108,13 @@
   .variant-photo img{width:100%;height:100%;object-fit:cover;display:block}
   .variant-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;color:#606772;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
   .variant-card .badge{top:9px;left:9px;padding:6px 8px;font-size:10px}
-  .variant-body{padding:11px;display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
-  .variant-title{font-size:14px;font-weight:800;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .variant-note{font-size:11px;color:var(--muted);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:30px}
-  .variant-edit{margin-top:auto;border:0;background:none;color:#dfe3e8;padding:5px 0 0;text-align:left;font-size:11px}
+  .color-overlay{position:absolute;left:9px;bottom:9px;display:flex;align-items:center;gap:6px;max-width:calc(100% - 18px);padding:5px 8px 5px 6px;border-radius:999px;background:rgba(10,11,13,.72);border:1px solid rgba(255,255,255,.13);backdrop-filter:blur(8px);font-size:9px;font-weight:700;color:#f1f3f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .color-dot{width:13px;height:13px;flex:0 0 13px;border-radius:50%;border:1px solid rgba(255,255,255,.4);box-shadow:0 0 0 1px rgba(0,0,0,.18)}
+  .variant-body{padding:11px;display:flex;flex-direction:column;gap:5px;flex:1;min-width:0;text-align:center}
+  .variant-brand{font-size:14px;font-weight:800;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+  .variant-color{font-size:11px;color:#b6bcc5;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+  .variant-note{font-size:11px;color:var(--muted);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:30px;text-align:center}
+  .variant-edit{margin-top:auto;border:0;background:none;color:#dfe3e8;padding:5px 0 0;text-align:center;font-size:11px;width:100%}
   .add-variant-card{flex:0 0 132px;scroll-snap-align:start;min-height:246px;border:1px dashed #333840;background:transparent;border-radius:16px;color:#7f8792;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font-size:12px;line-height:1.35}
   .add-variant-card:hover{background:#17191e;color:#d7dbe1;border-color:#4a505a}
   .category-block .type-list{margin-top:4px}
@@ -130,7 +133,7 @@
   .filter-item .small-btn{white-space:nowrap}
   dialog{width:min(660px,calc(100vw - 28px));border:1px solid var(--line);background:#121419;color:var(--text);border-radius:24px;padding:0;box-shadow:0 30px 100px rgba(0,0,0,.6)}
   dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
-  .modal{padding:22px}.modal h3{margin:0 0 18px;font-size:24px}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#191c21;color:white;border-radius:12px;padding:11px 12px;outline:none}.field textarea{min-height:88px;resize:vertical}
+  .modal{padding:22px}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px}.modal h3{margin:0;font-size:24px}.modal-close{width:40px;height:40px;flex:0 0 40px;border:1px solid var(--line);background:#191c21;color:#eef0f3;border-radius:50%;font-size:25px;line-height:1;display:grid;place-items:center;padding:0}.modal-close:hover{background:#23272d}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#191c21;color:white;border-radius:12px;padding:11px 12px;outline:none}.field textarea{min-height:88px;resize:vertical}.color-picker-row{display:grid;grid-template-columns:1fr 58px;gap:10px;align-items:stretch}.color-picker-row input[type=color]{height:49px;padding:5px;border-radius:12px;cursor:pointer}
   .preview{height:180px;border-radius:16px;overflow:hidden;border:1px dashed #343942;background:#17191e;display:flex;align-items:center;justify-content:center;color:var(--muted)}.preview img{width:100%;height:100%;object-fit:cover}
   .modal-actions{display:flex;justify-content:space-between;gap:10px;margin-top:18px}.right{display:flex;gap:10px}.danger{background:#2a1719;border-color:#4a262a;color:#ffb6bd}.hidden{display:none!important}
   .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:#f3f4f6;color:#111;padding:11px 14px;border-radius:999px;font-weight:700;font-size:13px;opacity:0;pointer-events:none;transition:.25s ease;z-index:99}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -201,7 +204,7 @@
   }
 
 
-  /* v7 — iPhone-first refinement. Desktop layout stays intact. */
+  /* v8 — iPhone-first refinement + brand/color cards. Desktop layout stays intact. */
   @media(max-width:700px){
     html{background:#0d0e10}
     body{min-height:100dvh;background:linear-gradient(180deg,#090a0c 0%,#101217 48%,#0b0c0f 100%);overflow-x:hidden}
@@ -251,9 +254,11 @@
     .variant-photo{height:164px}
     .variant-card .badge{top:8px;left:8px;padding:6px 8px;font-size:9px;letter-spacing:.035em}
     .variant-body{padding:10px 11px 11px;gap:4px}
-    .variant-title{font-size:14px;line-height:1.2}
+    .variant-brand{font-size:14px;line-height:1.2}
+    .variant-color{font-size:10px;line-height:1.25}
     .variant-note{min-height:0;font-size:10px;line-height:1.35;-webkit-line-clamp:2}
-    .variant-edit{min-height:34px;margin-top:auto;padding:9px 0 0;font-size:11px;display:flex;align-items:flex-end}
+    .variant-edit{min-height:34px;margin-top:auto;padding:9px 0 0;font-size:11px;display:flex;align-items:flex-end;justify-content:center}
+    .color-overlay{left:8px;bottom:8px;max-width:calc(100% - 16px);padding:5px 7px 5px 5px;font-size:8px}.color-dot{width:12px;height:12px;flex-basis:12px}
     .add-variant-card{flex:0 0 112px;min-height:250px;border-radius:16px;font-size:11px;padding:11px}
 
     .filter-list{gap:7px;margin-bottom:12px}
@@ -274,8 +279,8 @@
     dialog{inset:auto 0 0 0;width:100vw;max-width:none;max-height:94dvh;margin:0;border-radius:26px 26px 0 0;border-left:0;border-right:0;border-bottom:0;overflow:hidden;background:#111318}
     dialog::backdrop{background:rgba(0,0,0,.66);backdrop-filter:blur(5px)}
     .modal{max-height:94dvh;overflow-y:auto;overscroll-behavior:contain;padding:11px 16px calc(12px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch}
-    .modal:before{content:"";display:block;width:42px;height:5px;border-radius:999px;background:#3b4048;margin:0 auto 14px}
-    .modal h3{font-size:22px;line-height:1.05;margin:0 0 16px;letter-spacing:-.025em}
+    .modal:before{content:"";display:block;width:42px;height:5px;border-radius:999px;background:#3b4048;margin:0 auto 12px}
+    .modal-head{margin-bottom:14px}.modal h3{font-size:22px;line-height:1.05;margin:0;letter-spacing:-.025em}.modal-close{width:42px;height:42px;flex-basis:42px;font-size:27px;background:#191c21}
     .form{display:grid;grid-template-columns:1fr;gap:11px}
     .field.full{grid-column:auto}
     .field{gap:6px}
@@ -334,11 +339,15 @@
 
 <dialog id="itemDialog">
   <form method="dialog" class="modal" id="itemForm">
-    <h3 id="modalTitle">Додати річ</h3>
+    <div class="modal-head">
+      <h3 id="modalTitle">Додати річ</h3>
+      <button type="button" class="modal-close" id="closeModalBtn" aria-label="Закрити">×</button>
+    </div>
     <div class="form">
-      <div class="field"><label>Тип речі</label><input id="fName" required placeholder="Пуховик / Джинси / Бомбер..." /></div>
+      <div class="field"><label>Тип речі</label><input id="fName" required placeholder="Puffer / Bomber / Jeans..." /></div>
       <div class="field"><label>Категорія</label><select id="fCategory"></select></div>
-      <div class="field"><label>Варіант / колір</label><input id="fVariant" placeholder="чорний / коричневий / light blue..." /></div>
+      <div class="field"><label>Brand</label><input id="fBrand" placeholder="The North Face / Nike / Carhartt..." /></div>
+      <div class="field"><label>Color</label><div class="color-picker-row"><input id="fColorName" placeholder="Black / Brown / Navy..." /><input id="fColorHex" type="color" value="#111111" aria-label="Вибрати колір" /></div></div>
       <div class="field"><label>Статус</label><select id="fStatus"><option value="owned">OWNED</option><option value="need">NEED</option><option value="replace">REPLACE</option></select></div>
       <div class="field full"><label>Примітка</label><textarea id="fNote" placeholder="Fit A, cropped, cotton... "></textarea></div>
       <div class="field full"><label>Фото — URL</label><input id="fImageUrl" placeholder="https://..." /></div>
@@ -368,8 +377,28 @@ let openCategories=new Set();
 let editingId=null;
 let uploadedImage='';
 
+function inferColorHex(name=''){
+  const n=String(name).trim().toLowerCase();
+  const map=[
+    [/light\s*blue|світл.*син|голуб|блакит/,'#8fbce6'],[/dark\s*blue|navy|темн.*син/,'#1e355c'],
+    [/black|чорн|черн/,'#111111'],[/white|білий|біла|білі|бел/,'#f2f2f0'],[/brown|корич/,'#6f4932'],
+    [/gray|grey|сір|сер/,'#858a91'],[/blue|син/,'#4e78ad'],[/green|зел/,'#547356'],[/red|черв|красн/,'#b84d4d'],
+    [/beige|беж/,'#c8b79f'],[/cream|крем/,'#e7ddc7'],[/olive|олив/,'#6d7448'],[/khaki|хак/,'#777052'],
+    [/orange|помар/,'#d67a31'],[/yellow|жовт|желт/,'#d0aa3f'],[/purple|фіолет|фиолет/,'#785ca4'],[/pink|рожев|розов/,'#d38da5'],
+    [/burgundy|бордо/,'#6b2937'],[/camel/,'#b58a60'],[/tan/,'#aa7854'],[/silver|сріб|сереб/,'#adb4bd'],[/gold|золот/,'#c3a25a']
+  ];
+  for(const [re,hex] of map) if(re.test(n)) return hex;
+  return '#6f7680';
+}
+function normalizeItem(i){
+  const colorName=(i.colorName ?? i.variant ?? '').trim();
+  return {...i,brand:(i.brand||'').trim(),colorName,colorHex:i.colorHex||inferColorHex(colorName),variant:colorName};
+}
 function load(){
-  try{const raw=localStorage.getItem(STORAGE_KEY); if(raw) return JSON.parse(raw);}catch(e){}
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY);
+    if(raw){const data=JSON.parse(raw);return {categories:Array.isArray(data.categories)?data.categories:[...initialCategories],items:Array.isArray(data.items)?data.items.map(normalizeItem):[]};}
+  }catch(e){}
   return {categories:[...initialCategories],items:seed};
 }
 function save(){
@@ -396,7 +425,7 @@ function render(){
 
   const q=document.getElementById('search').value.trim().toLowerCase();
   let items=[...state.items];
-  if(q) items=items.filter(i=>[i.name,i.variant,i.note,i.category].join(' ').toLowerCase().includes(q));
+  if(q) items=items.filter(i=>[i.name,i.brand,i.colorName,i.variant,i.note,i.category].join(' ').toLowerCase().includes(q));
 
   const content=document.getElementById('content');content.innerHTML='';
   if(activeFilter!=='all'){
@@ -417,7 +446,7 @@ function renderStatusList(content,items){
     const thumb=document.createElement('div');thumb.className='filter-thumb';
     if(item.image){const img=document.createElement('img');img.src=item.image;img.alt=item.name;thumb.appendChild(img)} else thumb.textContent=item.category;
     const copy=document.createElement('div');copy.className='filter-copy';
-    copy.innerHTML=`<b>${esc(item.name)}</b><span>${esc([item.variant,item.category].filter(Boolean).join(' · '))}</span>`;
+    copy.innerHTML=`<b>${esc(item.name)}</b><span>${esc([item.brand,item.colorName,item.category].filter(Boolean).join(' · '))}</span>`;
     const edit=document.createElement('button');edit.type='button';edit.className='small-btn';edit.textContent='Edit';edit.onclick=()=>openEdit(item.id);
     row.append(thumb,copy,edit);list.appendChild(row);
   });
@@ -495,14 +524,20 @@ function renderTypeRows(parent,items,category){
 function variantCard(item){
   const card=document.createElement('article');card.className='variant-card';
   const photo=document.createElement('div');photo.className='variant-photo';
-  if(item.image){const img=document.createElement('img');img.src=item.image;img.alt=`${item.name} ${item.variant||''}`;photo.appendChild(img)}
-  else{const ph=document.createElement('div');ph.className='variant-placeholder';ph.textContent=item.variant||item.name;photo.appendChild(ph)}
+  if(item.image){const img=document.createElement('img');img.src=item.image;img.alt=`${item.name} ${item.brand||''} ${item.colorName||''}`;photo.appendChild(img)}
+  else{const ph=document.createElement('div');ph.className='variant-placeholder';ph.textContent=item.brand||item.colorName||item.name;photo.appendChild(ph)}
   const badge=document.createElement('span');badge.className='badge '+item.status;badge.textContent=statusText(item.status);photo.appendChild(badge);
+  if(item.colorName||item.colorHex){
+    const color=document.createElement('div');color.className='color-overlay';
+    const dot=document.createElement('span');dot.className='color-dot';dot.style.background=item.colorHex||inferColorHex(item.colorName);
+    const label=document.createElement('span');label.textContent=item.colorName||'COLOR';
+    color.append(dot,label);photo.appendChild(color);
+  }
   const body=document.createElement('div');body.className='variant-body';
-  const title=document.createElement('div');title.className='variant-title';title.textContent=item.variant||'Основний';
-  const edit=document.createElement('button');edit.className='variant-edit';edit.textContent='Редагувати';edit.onclick=()=>openEdit(item.id);
-  body.append(title);
+  if(item.brand){const brand=document.createElement('div');brand.className='variant-brand';brand.textContent=item.brand;body.appendChild(brand)}
+  if(item.colorName){const colorName=document.createElement('div');colorName.className='variant-color';colorName.textContent=item.colorName;body.appendChild(colorName)}
   if(item.note){const note=document.createElement('div');note.className='variant-note';note.textContent=item.note;body.appendChild(note)}
+  const edit=document.createElement('button');edit.className='variant-edit';edit.textContent='Редагувати';edit.onclick=()=>openEdit(item.id);
   body.append(edit);card.append(photo,body);return card;
 }
 function itemCard(item){
@@ -512,7 +547,7 @@ function itemCard(item){
   else{const ph=document.createElement('div');ph.className='placeholder';ph.textContent=item.category;photo.appendChild(ph)}
   const badge=document.createElement('span');badge.className='badge '+item.status;badge.textContent=statusText(item.status);photo.appendChild(badge);
   const body=document.createElement('div');body.className='card-body';
-  body.innerHTML=`<h3>${esc(item.name)}</h3><div class="meta">${esc(item.variant||'')}</div><div class="note">${esc(item.note||'')}</div>`;
+  body.innerHTML=`<h3>${esc(item.name)}</h3><div class="meta">${esc([item.brand,item.colorName].filter(Boolean).join(' · '))}</div><div class="note">${esc(item.note||'')}</div>`;
   const foot=document.createElement('div');foot.className='card-foot';foot.innerHTML=`<span>${esc(item.category)}</span>`;
   const edit=document.createElement('button');edit.className='edit-link';edit.textContent='Редагувати';edit.onclick=()=>openEdit(item.id);foot.appendChild(edit);body.appendChild(foot);
   card.append(photo,body);return card;
@@ -526,13 +561,13 @@ function openAdd(prefill={}){
   editingId=null;uploadedImage='';syncCategoryOptions();
   document.getElementById('modalTitle').textContent='Додати річ';document.getElementById('deleteBtn').classList.add('hidden');
   document.getElementById('fName').value=prefill.name||'';document.getElementById('fCategory').value=prefill.category||state.categories[0];
-  document.getElementById('fVariant').value=prefill.variant||'';document.getElementById('fStatus').value='need';document.getElementById('fNote').value='';document.getElementById('fImageUrl').value='';document.getElementById('fImageFile').value='';setPreview('');
+  document.getElementById('fBrand').value=prefill.brand||'';document.getElementById('fColorName').value=prefill.colorName||prefill.variant||'';document.getElementById('fColorHex').value=prefill.colorHex||inferColorHex(prefill.colorName||prefill.variant||'');document.getElementById('fStatus').value='need';document.getElementById('fNote').value='';document.getElementById('fImageUrl').value='';document.getElementById('fImageFile').value='';setPreview('');
   document.getElementById('itemDialog').showModal();
 }
 function openEdit(id){
   const item=state.items.find(i=>i.id===id);if(!item)return;editingId=id;uploadedImage=item.image||'';syncCategoryOptions();
   document.getElementById('modalTitle').textContent='Редагувати річ';document.getElementById('deleteBtn').classList.remove('hidden');
-  document.getElementById('fName').value=item.name;document.getElementById('fCategory').value=item.category;document.getElementById('fVariant').value=item.variant||'';document.getElementById('fStatus').value=item.status;document.getElementById('fNote').value=item.note||'';document.getElementById('fImageUrl').value=item.image?.startsWith('http')?item.image:'';document.getElementById('fImageFile').value='';setPreview(item.image||'');
+  document.getElementById('fName').value=item.name;document.getElementById('fCategory').value=item.category;document.getElementById('fBrand').value=item.brand||'';document.getElementById('fColorName').value=item.colorName||item.variant||'';document.getElementById('fColorHex').value=item.colorHex||inferColorHex(item.colorName||item.variant||'');document.getElementById('fStatus').value=item.status;document.getElementById('fNote').value=item.note||'';document.getElementById('fImageUrl').value=item.image?.startsWith('http')?item.image:'';document.getElementById('fImageFile').value='';setPreview(item.image||'');
   document.getElementById('itemDialog').showModal();
 }
 function setPreview(src){const p=document.getElementById('preview');p.innerHTML='';if(!src){p.textContent='Без фото';return}const img=document.createElement('img');img.src=src;p.appendChild(img)}
@@ -546,6 +581,8 @@ async function compressImage(file){
 
 document.getElementById('addItemBtn').onclick=()=>openAdd();
 document.getElementById('cancelBtn').onclick=()=>document.getElementById('itemDialog').close();
+document.getElementById('closeModalBtn').onclick=()=>document.getElementById('itemDialog').close();
+document.getElementById('fColorName').addEventListener('input',e=>{document.getElementById('fColorHex').value=inferColorHex(e.target.value)});
 document.getElementById('addCategoryBtn').onclick=()=>{const name=prompt('Назва нової категорії:');if(!name)return;const c=name.trim().toUpperCase();if(!c)return;if(!state.categories.includes(c)){state.categories.push(c);save();render();toast('Категорію додано')}};
 document.getElementById('deleteBtn').onclick=()=>{if(!editingId)return;if(confirm('Видалити цю картку?')){state.items=state.items.filter(i=>i.id!==editingId);save();document.getElementById('itemDialog').close();render();toast('Видалено')}};
 document.getElementById('search').addEventListener('input',render);
@@ -558,7 +595,8 @@ document.getElementById('fImageUrl').addEventListener('input',e=>{if(e.target.va
 document.getElementById('fImageFile').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;uploadedImage=await compressImage(file);document.getElementById('fImageUrl').value='';setPreview(uploadedImage)});
 document.getElementById('itemForm').addEventListener('submit',e=>{
   e.preventDefault();
-  const item={id:editingId||makeId(),name:document.getElementById('fName').value.trim(),category:document.getElementById('fCategory').value,variant:document.getElementById('fVariant').value.trim(),status:document.getElementById('fStatus').value,note:document.getElementById('fNote').value.trim(),image:uploadedImage||document.getElementById('fImageUrl').value.trim()};
+  const colorName=document.getElementById('fColorName').value.trim();
+  const item={id:editingId||makeId(),name:document.getElementById('fName').value.trim(),category:document.getElementById('fCategory').value,brand:document.getElementById('fBrand').value.trim(),colorName,colorHex:document.getElementById('fColorHex').value||inferColorHex(colorName),variant:colorName,status:document.getElementById('fStatus').value,note:document.getElementById('fNote').value.trim(),image:uploadedImage||document.getElementById('fImageUrl').value.trim()};
   if(editingId){const idx=state.items.findIndex(i=>i.id===editingId);state.items[idx]=item}else state.items.unshift(item);
   save();document.getElementById('itemDialog').close();render();toast('Збережено');
 });
