@@ -27,7 +27,7 @@
   .btn{border:1px solid var(--line);background:#17191e;color:var(--text);padding:11px 14px;border-radius:14px;transition:.18s ease}
   .btn:hover{transform:translateY(-1px);background:#1f2228}
   .btn.primary{background:#f4f5f7;color:#111;border-color:#f4f5f7;font-weight:700}
-  .hero{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;margin-bottom:18px}
+  .hero{display:block;margin-bottom:18px}
   .progress-card,.stat{background:rgba(21,23,28,.9);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:0 16px 60px rgba(0,0,0,.2)}
   .progress-card{min-height:170px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
   .progress-card:after{content:"";position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.12),transparent 65%)}
@@ -37,7 +37,7 @@
   .fraction{color:var(--muted);padding-bottom:7px}
   .bar{height:10px;border-radius:999px;background:#23262c;overflow:hidden;margin-top:18px}
   .bar > span{display:block;height:100%;width:0;background:linear-gradient(90deg,#f4f5f7,#9da7b4);border-radius:inherit;transition:.35s ease}
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:760px}
   .stat{min-height:80px;padding:16px;border:1px solid var(--line);color:var(--text);text-align:left;cursor:pointer;transition:.18s ease;width:100%}
   .stat:hover{transform:translateY(-2px);background:#1a1d22;border-color:#3a4049}
   .stat.active{border-color:#747d89;background:#20242a;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
@@ -114,14 +114,27 @@
   .add-variant-card{flex:0 0 132px;scroll-snap-align:start;min-height:246px;border:1px dashed #333840;background:transparent;border-radius:16px;color:#7f8792;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font-size:12px;line-height:1.35}
   .add-variant-card:hover{background:#17191e;color:#d7dbe1;border-color:#4a505a}
   .category-block .type-list{margin-top:4px}
+
+  .controls{display:flex;gap:10px;align-items:center;margin:14px 0 18px}
+  .controls .search{margin:0}
+  .controls-actions{display:flex;gap:8px;flex:0 0 auto}
+  .bottom-progress{margin-top:18px}
+  .category-empty{padding:22px 8px 10px;color:var(--muted);font-size:13px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .category-empty .small-btn{min-height:40px}
+  .filter-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+  .filter-item{display:grid;grid-template-columns:72px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);background:#121419;border-radius:16px;padding:8px}
+  .filter-thumb{width:72px;height:72px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#20242b,#111318);display:flex;align-items:center;justify-content:center;color:#6e7580;font-size:10px;text-align:center;padding:6px}
+  .filter-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .filter-copy{min-width:0}.filter-copy b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.filter-copy span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+  .filter-item .small-btn{white-space:nowrap}
   dialog{width:min(660px,calc(100vw - 28px));border:1px solid var(--line);background:#121419;color:var(--text);border-radius:24px;padding:0;box-shadow:0 30px 100px rgba(0,0,0,.6)}
   dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
   .modal{padding:22px}.modal h3{margin:0 0 18px;font-size:24px}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#191c21;color:white;border-radius:12px;padding:11px 12px;outline:none}.field textarea{min-height:88px;resize:vertical}
   .preview{height:180px;border-radius:16px;overflow:hidden;border:1px dashed #343942;background:#17191e;display:flex;align-items:center;justify-content:center;color:var(--muted)}.preview img{width:100%;height:100%;object-fit:cover}
   .modal-actions{display:flex;justify-content:space-between;gap:10px;margin-top:18px}.right{display:flex;gap:10px}.danger{background:#2a1719;border-color:#4a262a;color:#ffb6bd}.hidden{display:none!important}
   .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:#f3f4f6;color:#111;padding:11px 14px;border-radius:999px;font-weight:700;font-size:13px;opacity:0;pointer-events:none;transition:.25s ease;z-index:99}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-  @media(max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.category-summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-  @media(max-width:560px){.wrap{padding:20px 14px 70px}.topbar{align-items:flex-start;flex-direction:column}.actions{justify-content:flex-start}.grid{grid-template-columns:1fr 1fr;gap:10px}.category-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.category-block-title h3{font-size:22px}.category-block-head{align-items:center}.card{min-height:290px}.card-body{padding:12px}.card h3{font-size:16px}.form{grid-template-columns:1fr}.field.full{grid-column:auto}.big{font-size:52px}.stats{grid-template-columns:repeat(3,1fr)}.stat b{font-size:23px}}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:560px){.wrap{padding:20px 14px 70px}.topbar{align-items:flex-start;flex-direction:column}.actions{justify-content:flex-start}.grid{grid-template-columns:1fr 1fr;gap:10px}.category-block-title h3{font-size:22px}.category-block-head{align-items:center}.card{min-height:290px}.card-body{padding:12px}.card h3{font-size:16px}.form{grid-template-columns:1fr}.field.full{grid-column:auto}.big{font-size:52px}.stats{grid-template-columns:repeat(3,1fr)}.stat b{font-size:23px}}
   @media(max-width:760px){
     .type-row{grid-template-columns:1fr;gap:10px}
     .type-info{display:grid;grid-template-columns:1fr auto;align-items:end;gap:6px 12px;padding:2px}
@@ -149,7 +162,7 @@
     .wrap{padding:calc(16px + env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) calc(54px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}
     .topbar{margin-bottom:18px}
     .brand h1{font-size:42px;letter-spacing:-.06em}
-    .hero{gap:10px;margin-bottom:14px}
+    .hero{margin-bottom:12px}
     .progress-card{min-height:132px;padding:17px;border-radius:20px}
     .progress-main{margin-top:12px}
     .big{font-size:50px}
@@ -157,15 +170,7 @@
     .stat{min-height:74px;padding:12px 10px;border-radius:16px}
     .stat b{font-size:24px}
     .stat span{font-size:10px;letter-spacing:.08em}
-    .section-head{margin:18px 0 10px;gap:12px}
-    .section-head h2{font-size:22px}
-    .section-head-right{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
-    .section-head-right small{grid-column:1/-1}
-    .section-head-right .small-btn,.section-head-right .btn{min-height:44px;width:100%;margin:0!important}
-    .toolbar{margin:10px 0 14px}
-    .search{min-width:0;width:100%;min-height:46px;font-size:16px}
-    .category-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:16px}
-    .category-summary{padding:12px;min-height:68px;border-radius:15px}
+    .controls{display:grid;grid-template-columns:1fr;margin:10px 0 14px}.controls .search{min-width:0;width:100%;min-height:46px;font-size:16px}.controls-actions{display:grid;grid-template-columns:1fr 1fr}.controls-actions .btn,.controls-actions .small-btn{min-height:44px;width:100%}
     .category-block{border-radius:18px;margin-bottom:8px}
     .category-block-head{min-height:64px;padding:14px 14px}
     .category-block-title{display:block}
@@ -187,11 +192,10 @@
     dialog{width:100vw;max-width:none;margin:auto 0 0;border-radius:24px 24px 0 0;border-left:0;border-right:0;border-bottom:0;max-height:92dvh;padding-bottom:env(safe-area-inset-bottom)}
     .modal{padding:20px 16px calc(18px + env(safe-area-inset-bottom))}
     .modal-actions .btn{min-height:44px}
-    .toast{bottom:calc(16px + env(safe-area-inset-bottom));max-width:calc(100vw - 24px);text-align:center}
+    .filter-item{grid-template-columns:60px 1fr auto;gap:10px}.filter-thumb{width:60px;height:60px}.filter-item .small-btn{padding:8px}.toast{bottom:calc(16px + env(safe-area-inset-bottom));max-width:calc(100vw - 24px);text-align:center}
   }
   @media(max-width:390px){
     .brand h1{font-size:38px}
-    .category-summary-grid{grid-template-columns:1fr 1fr}
     .variant-card{flex-basis:142px}
   }
 
@@ -204,31 +208,29 @@
   </div>
 
   <section class="hero">
-    <div class="progress-card">
-      <div>
-        <div class="kicker">BASIC COMPLETION</div>
-        <div class="progress-main"><div class="big" id="percent">0%</div><div class="fraction" id="fraction">0 / 0</div></div>
-      </div>
-      <div class="bar"><span id="progressBar"></span></div>
-    </div>
     <div class="stats">
-      <button class="stat" data-status-filter="owned" type="button"><b id="ownedCount">0</b><span>Є</span></button>
-      <button class="stat" data-status-filter="need" type="button"><b id="needCount">0</b><span>Треба</span></button>
-      <button class="stat" data-status-filter="replace" type="button"><b id="replaceCount">0</b><span>Замінити</span></button>
+      <button class="stat" data-status-filter="owned" type="button"><b id="ownedCount">0</b><span>OWNED</span></button>
+      <button class="stat" data-status-filter="need" type="button"><b id="needCount">0</b><span>NEED</span></button>
+      <button class="stat" data-status-filter="replace" type="button"><b id="replaceCount">0</b><span>REPLACE</span></button>
     </div>
   </section>
 
-  <div class="section-head">
-    <div><div class="kicker">OVERVIEW</div><h2 id="viewTitle">Огляд гардероба</h2></div>
-    <div class="section-head-right">
-      <small id="viewCount"></small>
-      <button class="small-btn" id="showAllBtn" type="button" style="display:none">Показати все</button>
+  <div class="controls">
+    <input id="search" class="search" placeholder="Пошук: bomber, jeans, oakley..." />
+    <div class="controls-actions">
       <button class="small-btn" id="addCategoryBtn" type="button">+ Категорія</button>
       <button class="btn primary" id="addItemBtn" type="button">+ Додати річ</button>
     </div>
   </div>
-  <div class="toolbar"><input id="search" class="search" placeholder="Пошук: bomber, jeans, oakley..." /></div>
   <main id="content"></main>
+
+  <section class="progress-card bottom-progress">
+    <div>
+      <div class="kicker">BASIC COMPLETION</div>
+      <div class="progress-main"><div class="big" id="percent">0%</div><div class="fraction" id="fraction">0 / 0</div></div>
+    </div>
+    <div class="bar"><span id="progressBar"></span></div>
+  </section>
 </div>
 
 <dialog id="itemDialog">
@@ -238,10 +240,10 @@
       <div class="field"><label>Тип речі</label><input id="fName" required placeholder="Пуховик / Джинси / Бомбер..." /></div>
       <div class="field"><label>Категорія</label><select id="fCategory"></select></div>
       <div class="field"><label>Варіант / колір</label><input id="fVariant" placeholder="чорний / коричневий / light blue..." /></div>
-      <div class="field"><label>Статус</label><select id="fStatus"><option value="owned">Є</option><option value="need">Треба</option><option value="replace">Замінити</option></select></div>
+      <div class="field"><label>Статус</label><select id="fStatus"><option value="owned">OWNED</option><option value="need">NEED</option><option value="replace">REPLACE</option></select></div>
       <div class="field full"><label>Примітка</label><textarea id="fNote" placeholder="Fit A, cropped, cotton... "></textarea></div>
       <div class="field full"><label>Фото — URL</label><input id="fImageUrl" placeholder="https://..." /></div>
-      <div class="field full"><label>Або завантажити фото</label><input id="fImageFile" type="file" accept="image/*" /></div>
+      <div class="field full"><label>Фото з iPhone / комп’ютера</label><input id="fImageFile" type="file" accept="image/*" /></div>
       <div class="field full"><div class="preview" id="preview">Без фото</div></div>
     </div>
     <div class="modal-actions">
@@ -256,24 +258,9 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const STORAGE_KEY='baseWardrobe_v1';
+const STORAGE_KEY='baseWardrobe_v2_blank';
 const initialCategories=['JACKETS','PANTS','SHOES','BAGS','HATS','SLIPPERS','BELTS','SHORTS','UNDERWEAR','SOCKS','HOODIES','TEES','TANKS','SHIRTS','JUST WANT'];
-const seed=[
-['JACKETS','Пуховик','чорний','owned',''],['JACKETS','Бомбер','чорний','need','зима / весна'],['JACKETS','Мембранна вітровка','чорний','need',''],['JACKETS','Легка вітровка','','need','не мембрана / для бігу'],['JACKETS','Мікропух','','need',''],['JACKETS','Кожанка','','need',''],
-['PANTS','Джинси','сині','owned','світліші / темніші / cotton · широкий пропорційний fit A'],['PANTS','Джинси','чорні','owned','широкий пропорційний fit A'],['PANTS','Джинси','білі','need','широкий пропорційний fit A'],['PANTS','Хлопкові штани','чорні','owned','прямі · без принтів · без завуження · fit A'],['PANTS','Хлопкові штани','сірі','owned','прямі · без принтів · без завуження · fit A'],['PANTS','Карго','чорні','need','fit A · якісний матеріал'],['PANTS','Карго','зелені','need','fit A · якісний матеріал'],['PANTS','Вельветові штани','будь-який','need','fit A'],
-['SHOES','Adidas Spezial','','owned','casual'],['SHOES','ASICS','','need','casual'],['SHOES','New Balance','','need','casual'],['SHOES','Winter boots','','need','зимові'],['SHOES','Adidas running','','need','біг'],['SHOES','Nike running','','need','біг'],['SHOES','Saucony','','need','біг'],['SHOES','Hoka','','need','біг'],['SHOES','Туфлі','чорні','owned',''],['SHOES','Туфлі','коричневі','need',''],
-['BAGS','Портфель','','owned',''],['BAGS','Sling bag','','need',''],['BAGS','Сумка через плече','','need',''],['BAGS','Шопер','','need',''],['BAGS','Mini pack','','need',''],
-['HATS','Кепка','DEF','owned',''],['HATS','Кепка','RUN','owned',''],['HATS','Gorpcore cap','','need',''],['HATS','Панама','','need',''],['HATS','Шапка','','need',''],['HATS','Балаклава','','need',''],['HATS','Баф','','need',''],['HATS','Шарф','','need',''],
-['SLIPPERS','Crocs','','owned',''],['SLIPPERS','Hoka-like slippers','','need',''],['SLIPPERS','Birkenstock','','need',''],['BELTS','Ремінь','','need','можна з якимось лого'],
-['SHORTS','Джинсові шорти','сині','owned',''],['SHORTS','Джинсові шорти','чорні','need',''],['SHORTS','Спортивні шорти','чорні','owned',''],['SHORTS','Карго шорти','','need','ще не визначився'],
-['UNDERWEAR','Труси','','owned','6 чорних Puma · 2 Dickies'],['UNDERWEAR','Термо','літо','owned',''],['UNDERWEAR','Термо','зима','owned',''],
-['SOCKS','Шкарпетки','білі','owned',''],['SOCKS','Зимові шкарпетки','','owned',''],['SOCKS','Технологічні шкарпетки','','need',''],
-['HOODIES','Zip hoodie','чорна','need',''],['HOODIES','Zip hoodie','сіра','owned',''],['HOODIES','Hoodie','чорна','need','без zip'],['HOODIES','Hoodie','сіра','need','без zip'],['HOODIES','Светр / лонгслів','','need',''],
-['TEES','Футболка','біла','owned','casual · 2 шт'],['TEES','Футболка','чорна','owned','casual · 2 шт'],['TEES','Футболка','червона','owned','casual'],['TEES','Футболка','синя','owned','casual'],['TEES','Футболка','зелена','owned','casual'],['TEES','Compression tee','чорна','owned','sport'],['TEES','Compression tee','біла','owned','sport'],['TEES','Compression tee','червона','owned','sport'],['TEES','Compression tee','синя','owned','sport'],
-['TANKS','Майка','чорна','need','casual · хлопок / синтетика'],['TANKS','Майка','біла','need','casual · хлопок / синтетика'],['TANKS','Майка sport','чорна','need','синтетика'],['TANKS','Майка sport','біла','need','синтетика'],
-['SHIRTS','Рубашка','біла','owned','cropped'],['SHIRTS','Рубашка','чорна','owned','cropped'],
-['JUST WANT','Карабін','','need',''],['JUST WANT','Біжутерія','','need',''],['JUST WANT','Salomon','','need',''],['JUST WANT','Oakley','','need',''],['JUST WANT','Saucony','','need',''],['JUST WANT','Nike watch','','need','']
-].map((x,i)=>({id:'seed-'+i,category:x[0],name:x[1],variant:x[2],status:x[3],note:x[4],image:''}));
+const seed=[];
 
 let state=load();
 let activeCategory='ALL'; // kept for data compatibility; overview is the only view in v4
@@ -291,7 +278,7 @@ function save(){
   catch(e){toast('Не влізло в локальне сховище. Спробуй менше фото.');}
 }
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800)}
-function statusText(s){return s==='owned'?'Є':s==='replace'?'Замінити':'Треба'}
+function statusText(s){return s==='owned'?'OWNED':s==='replace'?'REPLACE':'NEED'}
 function makeId(){return 'i-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7)}
 
 function render(){
@@ -306,50 +293,42 @@ function render(){
   document.getElementById('ownedCount').textContent=owned;
   document.getElementById('needCount').textContent=need;
   document.getElementById('replaceCount').textContent=replace;
+  document.querySelectorAll('[data-status-filter]').forEach(b=>b.classList.toggle('active',b.dataset.statusFilter===activeFilter));
 
   const q=document.getElementById('search').value.trim().toLowerCase();
   let items=[...state.items];
-  if(activeFilter!=='all') items=items.filter(i=>i.status===activeFilter);
   if(q) items=items.filter(i=>[i.name,i.variant,i.note,i.category].join(' ').toLowerCase().includes(q));
 
-  const filterLabel=activeFilter==='owned'?'Є':activeFilter==='need'?'Треба':activeFilter==='replace'?'Замінити':'Огляд гардероба';
-  document.getElementById('viewTitle').textContent=filterLabel;
-  document.getElementById('viewCount').textContent=`${items.length} позицій`;
-  document.getElementById('showAllBtn').style.display=activeFilter==='all'?'none':'inline-flex';
-  document.querySelectorAll('[data-status-filter]').forEach(b=>b.classList.toggle('active',b.dataset.statusFilter===activeFilter));
-
   const content=document.getElementById('content');content.innerHTML='';
-  if(!items.length){content.innerHTML='<div class="empty">Нічого не знайдено.</div>';return}
+  if(activeFilter!=='all'){
+    const filtered=items.filter(i=>i.status===activeFilter);
+    renderStatusList(content,filtered);
+    return;
+  }
   renderAllView(content,items,q);
 }
 
-function renderAllView(content,visibleItems,q){
-  if(activeFilter==='all' && !q){
-    const intro=document.createElement('div');intro.className='all-intro';
-    intro.textContent='Натисни на категорію, щоб розгорнути її. Усередині довгі ряди варіантів скроляться вправо.';
-    content.appendChild(intro);
-
-    const summary=document.createElement('div');summary.className='category-summary-grid';
-    state.categories.forEach(category=>{
-      const all=state.items.filter(i=>i.category===category);
-      if(!all.length) return;
-      const owned=all.filter(i=>i.status==='owned').length;
-      const pct=all.length?Math.round(owned/all.length*100):0;
-      const b=document.createElement('button');b.type='button';b.className='category-summary';
-      b.innerHTML=`<div class="category-summary-top"><span class="category-summary-name">${esc(category)}</span><span class="category-summary-count">${owned}/${all.length}</span></div><div class="mini-bar"><span style="width:${pct}%"></span></div>`;
-      b.onclick=()=>toggleCategory(category,true);
-      summary.appendChild(b);
-    });
-    content.appendChild(summary);
+function renderStatusList(content,items){
+  const list=document.createElement('div');list.className='filter-list';
+  if(!items.length){
+    const empty=document.createElement('div');empty.className='empty';empty.textContent=`No ${statusText(activeFilter)} items yet.`;content.appendChild(empty);return;
   }
+  items.forEach(item=>{
+    const row=document.createElement('article');row.className='filter-item';
+    const thumb=document.createElement('div');thumb.className='filter-thumb';
+    if(item.image){const img=document.createElement('img');img.src=item.image;img.alt=item.name;thumb.appendChild(img)} else thumb.textContent=item.category;
+    const copy=document.createElement('div');copy.className='filter-copy';
+    copy.innerHTML=`<b>${esc(item.name)}</b><span>${esc([item.variant,item.category].filter(Boolean).join(' · '))}</span>`;
+    const edit=document.createElement('button');edit.type='button';edit.className='small-btn';edit.textContent='Edit';edit.onclick=()=>openEdit(item.id);
+    row.append(thumb,copy,edit);list.appendChild(row);
+  });
+  content.appendChild(list);
+}
 
+function renderAllView(content,visibleItems,q){
   state.categories.forEach(category=>{
     const items=visibleItems.filter(i=>i.category===category);
-    if(!items.length) return;
-    const all=state.items.filter(i=>i.category===category);
-    const owned=all.filter(i=>i.status==='owned').length;
-    const need=all.filter(i=>i.status==='need').length;
-    const replace=all.filter(i=>i.status==='replace').length;
+    if(q && !items.length) return;
 
     const section=document.createElement('section');
     section.className='category-block'+(openCategories.has(category)?' open':'');
@@ -358,25 +337,29 @@ function renderAllView(content,visibleItems,q){
     const head=document.createElement('div');head.className='category-block-head';
     head.tabIndex=0;head.setAttribute('role','button');head.setAttribute('aria-expanded',openCategories.has(category)?'true':'false');
     const title=document.createElement('div');title.className='category-block-title';
-    title.innerHTML=`<h3>${esc(category)}</h3><span>${owned} є · ${need} треба${replace?` · ${replace} замінити`:''}</span>`;
+    title.innerHTML=`<h3>${esc(category)}</h3>`;
     const chevron=document.createElement('span');chevron.className='category-chevron';chevron.setAttribute('aria-hidden','true');chevron.textContent='⌄';
     head.append(title,chevron);
     head.onclick=()=>toggleCategory(category,false);
     head.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleCategory(category,false)}};
 
     const inner=document.createElement('div');inner.className='category-content';
-    renderTypeRows(inner,items,category);
+    if(items.length){
+      renderTypeRows(inner,items,category);
+    }else{
+      const empty=document.createElement('div');empty.className='category-empty';
+      const label=document.createElement('span');label.textContent='Поки порожньо';
+      const add=document.createElement('button');add.type='button';add.className='small-btn';add.textContent='+ Додати річ';add.onclick=()=>openAdd({category});
+      empty.append(label,add);inner.appendChild(empty);
+    }
     section.append(head,inner);
     content.appendChild(section);
   });
 }
 
-function toggleCategory(category,scrollTo=false){
+function toggleCategory(category){
   if(openCategories.has(category)) openCategories.delete(category); else openCategories.add(category);
   render();
-  if(scrollTo && openCategories.has(category)){
-    requestAnimationFrame(()=>document.querySelector(`.category-block[data-category="${CSS.escape(category)}"]`)?.scrollIntoView({behavior:'smooth',block:'start'}));
-  }
 }
 
 function renderTypeRows(parent,items,category){
@@ -395,7 +378,7 @@ function renderTypeRows(parent,items,category){
     const owned=group.items.filter(i=>i.status==='owned').length;
     const need=group.items.filter(i=>i.status==='need').length;
     const replace=group.items.filter(i=>i.status==='replace').length;
-    info.innerHTML=`<div class="type-kicker">TYPE</div><h3>${esc(group.name)}</h3><div class="type-count">${owned} є${need?` · ${need} треба`:''}${replace?` · ${replace} замінити`:''}</div>`;
+    info.innerHTML=`<div class="type-kicker">TYPE</div><h3>${esc(group.name)}</h3><div class="type-count">${owned?`${owned} OWNED`:''}${need?`${owned?' · ':''}${need} NEED`:''}${replace?`${(owned||need)?' · ':''}${replace} REPLACE`:''}</div>`;
     const addWrap=document.createElement('div');addWrap.className='type-add';
     const addBtn=document.createElement('button');addBtn.textContent='+ Варіант';
     addBtn.onclick=()=>openAdd({category,name:group.name});
@@ -471,7 +454,6 @@ document.querySelectorAll('[data-status-filter]').forEach(b=>b.onclick=()=>{
   render();
   document.getElementById('content').scrollIntoView({behavior:'smooth',block:'start'});
 });
-document.getElementById('showAllBtn').onclick=()=>{activeFilter='all';render()};
 document.getElementById('fImageUrl').addEventListener('input',e=>{if(e.target.value.trim()){uploadedImage=e.target.value.trim();setPreview(uploadedImage)}});
 document.getElementById('fImageFile').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;uploadedImage=await compressImage(file);document.getElementById('fImageUrl').value='';setPreview(uploadedImage)});
 document.getElementById('itemForm').addEventListener('submit',e=>{
