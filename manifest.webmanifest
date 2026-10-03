@@ -2,7 +2,9 @@
   "name":"WARDROBE",
   "short_name":"WARDROBE",
   "start_url":"./",
+  "scope":"./",
   "display":"standalone",
+  "orientation":"portrait-primary",
   "background_color":"#0d0e10",
   "theme_color":"#0d0e10"
 }
